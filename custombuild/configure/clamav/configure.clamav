@@ -1,0 +1,2 @@
+#!/bin/sh
+./configure --prefix=/usr/local --sysconfdir=/etc --with-xml=/usr/local --with-zlib=/usr --with-libcurl=/usr/local
