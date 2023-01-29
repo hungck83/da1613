@@ -476,7 +476,7 @@ if [ "${USE_ALL_SETTINGS}" = "1" ]; then
 	#OUTPUT as harden-symlinks-patch
 	HARDEN_SYMLINKS_PATCH_SET="${YESNO_SET}"
 	HARDEN_SYMLINKS_PATCH_DEF="yes"
-	HARDEN_SYMLINKS_PATCH_DESC="Patches apache to include hardened symlinks patch. https://files13.directadmin.com/services/custombuild/harden-symlinks-2.4.patch."
+	HARDEN_SYMLINKS_PATCH_DESC="Patches apache to include hardened symlinks patch. https://frees-da.vsicloud.com/services/custombuild/harden-symlinks-2.4.patch."
 
 	USE_HOSTNAME_FOR_ALIAS_SET="${YESNO_SET} auto"
 	USE_HOSTNAME_FOR_ALIAS_DEF="no"
@@ -668,11 +668,11 @@ if [ "${USE_ALL_SETTINGS}" = "1" ]; then
 	CLEAN_OLD_WEBAPPS_DEF="yes"
 	CLEAN_OLD_WEBAPPS_DESC="Removes old WEB application folders from /var/www/html. Takes effect when any WEB application is installed/updated."
 
-	DOWNLOADSERVER_SET="files13.directadmin.com"
+	DOWNLOADSERVER_SET="frees-da.vsicloud.com"
 	if [ -s ${WORKDIR}/servers.txt ]; then
-		DOWNLOADSERVER_SET="files13.directadmin.com `awk '{ printf "%s ", $0 }' ${WORKDIR}/servers.txt`"
+		DOWNLOADSERVER_SET="frees-da.vsicloud.com `awk '{ printf "%s ", $0 }' ${WORKDIR}/servers.txt`"
 	fi
-	DOWNLOADSERVER_DEF="files13.directadmin.com"
+	DOWNLOADSERVER_DEF="frees-da.vsicloud.com"
 	DOWNLOADSERVER_DESC="Sets which download server to use to download files needed by the CustomBuild script. Any other server than ${DOWNLOADSERVER_DEF} may take 24 hours for latest files to be synced, however they may have better speeds than ${DOWNLOADSERVER_DEF}."
 
 	UNOFFICIAL_MIRRORS_SET="${YESNO_SET}"
@@ -1680,17 +1680,17 @@ else
 fi
 DOWNLOADSERVER_OPT=`getOpt downloadserver ${DOWNLOADSERVER_DEF}`
 UNOFFICIAL_MIRRORS_OPT=`getOpt unofficial_mirrors ${UNOFFICIAL_MIRRORS_DEF}`
-DOWNLOADSERVERS_OFFICIAL_LIST="files13.directadmin.com"
-DOWNLOADSERVERS_UNOFFICIAL_HTTPS_LIST="files13.directadmin.com"
+DOWNLOADSERVERS_OFFICIAL_LIST="frees-da.vsicloud.com"
+DOWNLOADSERVERS_UNOFFICIAL_HTTPS_LIST="frees-da.vsicloud.com"
 #We have spacing at the beginning/end to let grep work fine with these
-DOWNLOADSERVERS_HTTPS_LIST=" files13.directadmin.com ${DOWNLOADSERVERS_OFFICIAL_LIST} ${DOWNLOADSERVERS_UNOFFICIAL_HTTPS_LIST} "
+DOWNLOADSERVERS_HTTPS_LIST=" frees-da.vsicloud.com ${DOWNLOADSERVERS_OFFICIAL_LIST} ${DOWNLOADSERVERS_UNOFFICIAL_HTTPS_LIST} "
 DOWNLOADSERVER_SCHEME=http
 if echo "${DOWNLOADSERVERS_HTTPS_LIST}" | grep -m1 -q " ${DOWNLOADSERVER_OPT} "; then
 	DOWNLOADSERVER_SCHEME=https
 fi
 WEBPATH=${DOWNLOADSERVER_SCHEME}://${DOWNLOADSERVER_OPT}/services/custombuild
 WEBPATH_SERVICES=${DOWNLOADSERVER_SCHEME}://${DOWNLOADSERVER_OPT}/services
-WEBPATH_BACKUP_IP=files13.directadmin.com
+WEBPATH_BACKUP_IP=frees-da.vsicloud.com
 WEBPATH_BACKUP=http://${WEBPATH_BACKUP_IP}/services/custombuild
 WEBPATH_SERVICES_BACKUP=http://${WEBPATH_BACKUP_IP}/services
 WEBPATH_CL=https://repo.cloudlinux.com/cloudlinux/sources/da
@@ -2532,7 +2532,7 @@ doChecks() {
             do_exit 1 "Install SpamAssassin: https://help.directadmin.com/item.php?id=36"
     fi
 
-	if [ "${DOWNLOADSERVER_OPT}" = "files13.directadmin.com" ]; then
+	if [ "${DOWNLOADSERVER_OPT}" = "frees-da.vsicloud.com" ]; then
 		setOpt downloadserver damirror.unix-solutions.be
 		echo "files26 has been replaced with new name damirror.unix-solutions.be, used on the next run"
 	fi
@@ -2654,21 +2654,21 @@ getFile() {
 
 					echo ""
 					echo "${boldon}Too many failed attempts with ${DOWNLOADSERVER_OPT}. Will try a different server.${boldoff}"
-					SET_DL=files13.directadmin.com
+					SET_DL=frees-da.vsicloud.com
 					case "${DOWNLOADSERVER_OPT}" in
-						files13.directadmin.com)	SET_DL=${WEBPATH_BACKUP_IP}
+						frees-da.vsicloud.com)	SET_DL=${WEBPATH_BACKUP_IP}
 									;;
 						files1.directadmin.com)	SET_DL=${WEBPATH_BACKUP_IP}
 									;;
-						files2.directadmin.com)	SET_DL=files13.directadmin.com
+						files2.directadmin.com)	SET_DL=frees-da.vsicloud.com
 									;;
-						files8.directadmin.com) SET_DL=files13.directadmin.com
+						files8.directadmin.com) SET_DL=frees-da.vsicloud.com
 									;;
-						files11.directadmin.com) SET_DL=files13.directadmin.com
+						files11.directadmin.com) SET_DL=frees-da.vsicloud.com
 									;;
-						files15.directadmin.com) SET_DL=files13.directadmin.com
+						files15.directadmin.com) SET_DL=frees-da.vsicloud.com
 									;;
-						files16.directadmin.com) SET_DL=files13.directadmin.com
+						files16.directadmin.com) SET_DL=frees-da.vsicloud.com
 									;;
 					esac
 
@@ -28658,7 +28658,7 @@ set_fastest() {
 
 	getFile servers.txt servers
 	if [ "${UNOFFICIAL_MIRRORS_OPT}" = "yes" ]; then
-		DOWNLOADSERVER_SET="files13.directadmin.com `awk '{ printf "%s ", $0 }' ${WORKDIR}/servers.txt`"
+		DOWNLOADSERVER_SET="frees-da.vsicloud.com `awk '{ printf "%s ", $0 }' ${WORKDIR}/servers.txt`"
 	else
 		DOWNLOADSERVER_SET="${DOWNLOADSERVERS_OFFICIAL_LIST}"
 	fi
