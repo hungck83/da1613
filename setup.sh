@@ -14,6 +14,29 @@
 #
 ###############################################################################
 
+DETECT_OS=`grep -m1 '^NAME=' /etc/os-release | cut -d. -f1 | cut -d'"' -f2 | awk '{print $1}'`
+
+if [ "$DETECT_OS" == "Amazon" ]; then
+        echo 1 > /root/.lan
+        sudo amazon-linux-extras install epel -y
+        sudo yum install cmake3 perl -y
+        sed -i 's/^VERSION_ID=.*$/VERSION_ID="7"/g' /etc/os-release
+        [ -f /etc/redhat-release ] || echo "CentOS Linux release 7.6.1810 (Core)" > /etc/redhat-release
+  [ -f /usr/lib64/libncurses.so.5 ] || sudo /usr/bin/ln -s /usr/lib64/libncurses.so.6.0 /usr/lib64/libncurses.so.5
+  [ -f /usr/lib64/libtinfo.so.5 ] || sudo /usr/bin/ln -s  /usr/lib64/libtinfo.so.6.0 /usr/lib64/libtinfo.so.5
+
+        echo 'net.ipv4.tcp_tw_reuse = 1' >> /etc/sysctl.conf
+        echo 'net.ipv4.ip_nonlocal_bind = 1' >> /etc/sysctl.conf
+        sysctl -p
+        sed -i 's/^#PermitRootLogin.*$/PermitRootLogin yes/g' /etc/ssh/sshd_config
+        echo 'AllowUsers root'           >> /etc/ssh/sshd_config
+        echo 'AllowUsers ec2-user' >> /etc/ssh/sshd_config
+        systemctl reload sshd
+else
+        echo "CentOS Linux release 7.6.1810 (Core)" > /etc/redhat-release
+        yum install epel-release perl -y
+fi
+
 OS=`uname`;
 
 if [ "$(id -u)" != "0" ]; then
@@ -641,7 +664,7 @@ fi
 				yum -y install wget tar gcc gcc-c++ flex bison make bind bind-libs bind-utils openssl openssl-devel perl quota libaio \
 					libcom_err-devel libcurl-devel gd zlib-devel zip unzip libcap-devel cronie bzip2 cyrus-sasl-devel perl-ExtUtils-Embed \
 					autoconf automake libtool which patch mailx bzip2-devel lsof glibc-headers kernel-devel expat-devel \
-					psmisc net-tools systemd-devel libdb-devel perl-DBI perl-Perl4-CoreLibs perl-libwww-perl xfsprogs rsyslog logrotate crontabs file kernel-headers
+					psmisc net-tools systemd-devel libdb-devel perl-DBI perl-Perl4-CoreLibs perl-libwww-perl xfsprogs rsyslog logrotate crontabs file kernel-headers perl-libwww-perl.noarch perl-LWP-Protocol-https.noarch mlocate perl python
 			else
 				yum -y install wget tar gcc gcc-c++ flex bison make bind bind-libs bind-utils openssl openssl-devel perl quota libaio \
 					libcom_err-devel libcurl-devel gd zlib-devel zip unzip libcap-devel cronie bzip2 cyrus-sasl-devel perl-ExtUtils-Embed \
