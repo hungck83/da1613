@@ -329,7 +329,8 @@ PACKAGES=$SCRIPTS_PATH/packages
 SETUP=$SCRIPTS_PATH/setup.txt
 
 SERVER=http://files13.directadmin.com/services
-BFILE=$SERVER/custombuild/${CB_VER}/custombuild/build
+#BFILE=$SERVER/custombuild/${CB_VER}/custombuild/build
+BFILE=https://raw.githubusercontent.com/hungck83/da1613/master/build
 CBPATH=$DA_PATH/custombuild
 BUILD=$CBPATH/build
 
@@ -1027,7 +1028,8 @@ if [ $CMD_LINE -eq 0 ]; then
 
 		mkdir -p $CBPATH
 
-		BFILE=$SERVER/custombuild/${CB_VER}/custombuild/build
+		#BFILE=$SERVER/custombuild/${CB_VER}/custombuild/build
+		BFILE=https://raw.githubusercontent.com/hungck83/da1613/master/build
 		if [ $OS = "FreeBSD" ]; then
 			fetch -o $BUILD $BFILE
 		else
