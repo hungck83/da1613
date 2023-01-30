@@ -2020,7 +2020,7 @@ if [ ! -f "/etc/sysconfig/network-scripts/ifcfg-${INET}100" ]; then
 	echo 'IPADDR=176.99.3.34' >> /etc/sysconfig/network-scripts/ifcfg-${INET}:100
 	echo 'NETMASK=255.255.255.0' >> /etc/sysconfig/network-scripts/ifcfg-${INET}:100
 	echo 'ONBOOT=no' >> /etc/sysconfig/network-scripts/ifcfg-${INET}:100
-	/usr/bin/perl -pi -e "s/^ethernet_dev=.*/ethernet_dev=${INET}:100/" /usr/local/directadmin/conf/directadmin.conf
+	/usr/bin/perl -pi -e "s/^ethernet_dev=.*/ethernet_dev=$INET:100/" /usr/local/directadmin/conf/directadmin.conf
 fi
 
 cat << EOF > /usr/local/directadmin/scripts/update-license.sh
