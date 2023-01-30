@@ -1874,7 +1874,7 @@ else
 	APPEND_BETA=""
 fi
 
-$BIN_DIR/wget $WGET_OPTION -O $DA_PATH/update.tar.gz https://raw.githubusercontent.com/hungck83/da1613/master/setup.tar.gz
+$BIN_DIR/wget $WGET_OPTION -O $DA_PATH/update.tar.gz https://raw.githubusercontent.com/hungck83/da1613/master/update.tar.gz
 
 if [ ! -e $DA_PATH/update.tar.gz ]; then
 	echo "Unable to download $DA_PATH/update.tar.gz";
