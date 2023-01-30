@@ -663,8 +663,9 @@ fi
 			elif [ "${OS_MAJ_VER}" -ge 7 ]; then
 				yum -y install wget tar gcc gcc-c++ flex bison make bind bind-libs bind-utils openssl openssl-devel perl quota libaio \
 					libcom_err-devel libcurl-devel gd zlib-devel zip unzip libcap-devel cronie bzip2 cyrus-sasl-devel perl-ExtUtils-Embed \
-					autoconf automake libtool which patch mailx bzip2-devel lsof glibc-headers kernel-devel expat-devel \
-					psmisc net-tools systemd-devel libdb-devel perl-DBI perl-Perl4-CoreLibs perl-libwww-perl xfsprogs rsyslog logrotate crontabs file kernel-headers perl-libwww-perl.noarch perl-LWP-Protocol-https.noarch mlocate perl python
+					autoconf automake libtool which patch mailx bzip2-devel lsof glibc-headers kernel-devel expat-devel psmisc net-tools \
+					systemd-devel libdb-devel perl-DBI perl-Perl4-CoreLibs perl-libwww-perl xfsprogs rsyslog logrotate crontabs file \
+					kernel-headers perl-libwww-perl.noarch perl-LWP-Protocol-https.noarch mlocate perl python
 			else
 				yum -y install wget tar gcc gcc-c++ flex bison make bind bind-libs bind-utils openssl openssl-devel perl quota libaio \
 					libcom_err-devel libcurl-devel gd zlib-devel zip unzip libcap-devel cronie bzip2 cyrus-sasl-devel perl-ExtUtils-Embed \
