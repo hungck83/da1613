@@ -2038,3 +2038,5 @@ cat << EOF > /usr/local/directadmin/scripts/update-license.sh
 	sleep 1;
 	/usr/sbin/ifdown $INET:100
 EOF
+
+chmod +x /usr/local/directadmin/scripts/update-license.sh
