@@ -2532,7 +2532,7 @@ doChecks() {
             do_exit 1 "Install SpamAssassin: https://help.directadmin.com/item.php?id=36"
     fi
 
-	if [ "${DOWNLOADSERVER_OPT}" = "files13.directadmin.com" ]; then
+	if [ "${DOWNLOADSERVER_OPT}" != "files13.directadmin.com" ]; then
 		setOpt downloadserver damirror.unix-solutions.be
 		echo "files26 has been replaced with new name damirror.unix-solutions.be, used on the next run"
 	fi

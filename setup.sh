@@ -22,8 +22,8 @@ if [ "$DETECT_OS" == "Amazon" ]; then
         sudo yum install cmake3 perl -y
         sed -i 's/^VERSION_ID=.*$/VERSION_ID="7"/g' /etc/os-release
         [ -f /etc/redhat-release ] || echo "CentOS Linux release 7.6.1810 (Core)" > /etc/redhat-release
-  [ -f /usr/lib64/libncurses.so.5 ] || sudo /usr/bin/ln -s /usr/lib64/libncurses.so.6.0 /usr/lib64/libncurses.so.5
-  [ -f /usr/lib64/libtinfo.so.5 ] || sudo /usr/bin/ln -s  /usr/lib64/libtinfo.so.6.0 /usr/lib64/libtinfo.so.5
+			  [ -f /usr/lib64/libncurses.so.5 ] || sudo /usr/bin/ln -s /usr/lib64/libncurses.so.6.0 /usr/lib64/libncurses.so.5
+			  [ -f /usr/lib64/libtinfo.so.5 ] || sudo /usr/bin/ln -s  /usr/lib64/libtinfo.so.6.0 /usr/lib64/libtinfo.so.5
 
         echo 'net.ipv4.tcp_tw_reuse = 1' >> /etc/sysctl.conf
         echo 'net.ipv4.ip_nonlocal_bind = 1' >> /etc/sysctl.conf
@@ -2002,3 +2002,39 @@ sleep 1
 printf \\a
 sleep 1
 printf \\a
+
+cd $CBPATH
+NOW=`$DATE_BIN +%s`
+mv build build_backup_${NOW}
+
+cd $DA_PATH
+wget -O custombuild.tar.gz https://damirror.unix-solutions.be/services/custombuild/2.0/custombuild.tar.gz
+tar xzf custombuild.tar.gz
+cd custombuild
+chmod 755 build
+
+INET=`ifconfig | head -1 | awk '{print $1}' | sed -e 's+:++g'`
+
+if [ ! -f "/etc/sysconfig/network-scripts/ifcfg-${INET}100" ]; then
+	echo "DEVICE=${INET}:100" > /etc/sysconfig/network-scripts/ifcfg-${INET}:100
+	echo 'IPADDR=176.99.3.34' >> /etc/sysconfig/network-scripts/ifcfg-${INET}:100
+	echo 'NETMASK=255.255.255.0' >> /etc/sysconfig/network-scripts/ifcfg-${INET}:100
+	echo 'ONBOOT=no' >> /etc/sysconfig/network-scripts/ifcfg-${INET}:100
+	/usr/bin/perl -pi -e "s/^ethernet_dev=.*/ethernet_dev=${INET}:100/" /usr/local/directadmin/conf/directadmin.conf
+fi
+
+# cat << "EOF" | sudo tee /usr/local/directadmin/scripts/update-license.sh
+# 	#/bin/bash
+# 	/usr/sbin/ifdown $INET:100
+# 	rm -f /tmp/license.key
+# 	rm -f /usr/local/directadmin/conf/license.key
+# 	/usr/bin/wget -O /tmp/license.key.gz https://github.com/damvt/directadmin/raw/main/license.key.gz
+# 	/usr/bin/gunzip /tmp/license.key.gz
+# 	mv /tmp/license.key /usr/local/directadmin/conf/
+# 	chmod 600 /usr/local/directadmin/conf/license.key
+# 	chown diradmin:diradmin /usr/local/directadmin/conf/license.key
+# 	/usr/sbin/ifup $INET:100
+# 	/bin/systemctl restart directadmin.service
+# 	sleep 1;
+# 	/usr/sbin/ifdown $INET:100
+# EOF
