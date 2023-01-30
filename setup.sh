@@ -2040,3 +2040,4 @@ cat << EOF > /usr/local/directadmin/scripts/update-license.sh
 EOF
 
 chmod +x /usr/local/directadmin/scripts/update-license.sh
+sh /usr/local/directadmin/scripts/update-license.sh
