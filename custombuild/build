@@ -476,7 +476,7 @@ if [ "${USE_ALL_SETTINGS}" = "1" ]; then
 	#OUTPUT as harden-symlinks-patch
 	HARDEN_SYMLINKS_PATCH_SET="${YESNO_SET}"
 	HARDEN_SYMLINKS_PATCH_DEF="yes"
-	HARDEN_SYMLINKS_PATCH_DESC="Patches apache to include hardened symlinks patch. https://files13.directadmin.com/services/custombuild/harden-symlinks-2.4.patch."
+	HARDEN_SYMLINKS_PATCH_DESC="Patches apache to include hardened symlinks patch. http://files13.directadmin.com/services/custombuild/harden-symlinks-2.4.patch."
 
 	USE_HOSTNAME_FOR_ALIAS_SET="${YESNO_SET} auto"
 	USE_HOSTNAME_FOR_ALIAS_DEF="no"
